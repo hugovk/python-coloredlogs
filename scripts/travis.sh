@@ -18,7 +18,7 @@
 
 main () {
   if [ "$TRAVIS_OS_NAME" = osx ]; then
-    local environment="$HOME/virtualenv/python2.7"
+    local environment="$HOME/virtualenv/python3.8"
     if [ -x "$environment/bin/python" ]; then
       msg "Activating virtual environment ($environment) .."
       source "$environment/bin/activate"
