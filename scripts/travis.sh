@@ -19,15 +19,15 @@
 main () {
   if [ "$TRAVIS_OS_NAME" = osx ]; then
     local environment="$HOME/virtualenv/python3.8"
-    if [ -x "$environment/bin/python" ]; then
+    if [ -x "$environment/bin/python3" ]; then
       msg "Activating virtual environment ($environment) .."
       source "$environment/bin/activate"
     else
       if ! which virtualenv &>/dev/null; then
         msg "Installing 'virtualenv' in per-user site-packages .."
-        pip install --user virtualenv
+        python3 -m pip install --user virtualenv
         msg "Figuring out 'bin' directory of per-user site-packages .."
-        LOCAL_BINARIES=$(python -c 'import os, site; print(os.path.join(site.USER_BASE, "bin"))')
+        LOCAL_BINARIES=$(python3 -c 'import os, site; print(os.path.join(site.USER_BASE, "bin"))')
         msg "Prefixing '$LOCAL_BINARIES' to PATH .."
         export PATH="$LOCAL_BINARIES:$PATH"
       fi
@@ -36,9 +36,9 @@ main () {
       msg "Activating virtual environment ($environment) .."
       source "$environment/bin/activate"
       msg "Checking if 'pip' executable works .."
-      if ! pip --version; then
+      if ! python3 -m pip --version; then
         msg "Bootstrapping working 'pip' installation using get-pip.py .."
-        curl -s https://bootstrap.pypa.io/get-pip.py | python -
+        curl -s https://bootstrap.pypa.io/get-pip.py | python3 -
       fi
     fi
   fi
